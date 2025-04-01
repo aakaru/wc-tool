@@ -1,28 +1,18 @@
 #!/bin/bash
 
-lines=0
-words=0
-bytes=0
-
 if [ $# -eq 0 ]; then
-  
-  input=$(cat /dev/stdin)
+    wc -l -w -c | awk '{printf "%d %d %d\n", $1, $2, $3}'
 else
-    
     if [ ! -f "$1" ]; then
-        echo "File '$1' not found."
+        echo "Error: File '$1' not found." >&2
         exit 1
     fi
-  input=$(cat "$1")
+    
+    result=$(wc -l -w -c "$1")
+    
+    lines=$(echo "$result" | awk '{print $1}')
+    words=$(echo "$result" | awk '{print $2}')
+    bytes=$(echo "$result" | awk '{print $3}')
+    
+    printf "%d %d %d %s\n" "$lines" "$words" "$bytes" "$1"
 fi
-
-lines=$(echo "$input" | wc -l)
-words=$(echo "$input" | wc -w)
-bytes=$(echo "$input" | wc -c)
-
-if [ $# -eq 0 ]; then
-printf "%d %d %d\n" "$lines" "$words" "$bytes"
-else
-printf "%d %d %d %s\n" "$lines" "$words" "$bytes" "$1"
-fi
-
