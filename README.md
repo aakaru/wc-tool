@@ -1,4 +1,4 @@
-# A simple WC Tool Automation Script
+# A minimalistic WC Tool Automation Script
 
 A simple bash script that mimics the functionality of the Unix/Linux `wc` (word count) command.
 
